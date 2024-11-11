@@ -18,6 +18,7 @@ import { EndPoints } from "@/constants/EndPoints";
 import { axiosApi } from "@/api/axiosApi";
 import { useState } from "react";
 import { enToFaNumber } from "@/utility/utils";
+import {BarcodeScanner} from '@thewirv/react-barcode-scanner';
 
 const InfoItem = ({ title, info }) => {
   return (
@@ -31,6 +32,7 @@ const InfoItem = ({ title, info }) => {
 };
 
 const HomeScreen = () => {
+  const [data, setData] = useState("No result");
   const [info, setInfo] = useState(null);
   const {
     handleSubmit,
@@ -77,37 +79,18 @@ const HomeScreen = () => {
         py: 6,
       }}
     >
-      <Box
-        sx={{
-          position: "relative",
-          height: { md: 350, xs: 290 },
-          width: { md: 350, xs: 290 },
-
-          mx: "auto",
-        }}
-      >
-        <Box
-          sx={{
-            position: "absolute",
-            top: 0,
-            width: "100%",
-            height: "100%",
+      <Box>
+        <BarcodeScanner
+          onSuccess={(text) => setData(text)}
+          onError={(error) => {
+            if (error) {
+              console.error(error.message);
+            }
           }}
-        >
-          <Scanner
-            onScan={(result) => console.log(result)}
-            onError={(e) => {
-              console.log(e);
-            }}
-            components={{
-              audio: true,
-              finder: true,
-              torch: true,
-              zoom: true,
-              onOff: true,
-            }}
-          />
-        </Box>
+          onLoad={() => console.log("Video feed has loaded!")}
+          containerStyle={{ width: "100%" }}
+        />
+        <p>{data}</p>
       </Box>
 
       <Box component="form" mt={5} onSubmit={handleSubmit(onSubmit)}>
