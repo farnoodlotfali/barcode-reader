@@ -31,7 +31,6 @@ const InfoItem = ({ title, info }) => {
 };
 
 const HomeScreen = () => {
-  const [data, setData] = useState("No result");
   const [info, setInfo] = useState(null);
 
   const {
@@ -45,7 +44,7 @@ const HomeScreen = () => {
   const Inputs = [
     {
       type: INPUT_TYPES.NUMBER,
-      name: "verificationCode",
+      name: "barcode",
       label: "کد",
       control: control,
       rules: {
@@ -72,6 +71,10 @@ const HomeScreen = () => {
     } catch (error) {}
   };
 
+  const handleBarcodeDetect = (code) => {
+    setValue("barcode", code);
+  };
+
   return (
     <Container
       maxWidth="xs"
@@ -79,50 +82,63 @@ const HomeScreen = () => {
         py: 6,
       }}
     >
-      <Box>
-        <Scanner
-          formats={[
-            "qr_code",
-            "micro_qr_code",
-            "rm_qr_code",
-            "maxi_code",
-            "pdf417",
-            "aztec",
-            "data_matrix",
-            "matrix_codes",
-            "dx_film_edge",
-            "databar",
-            "databar_expanded",
-            "codabar",
-            "code_39",
-            "code_93",
-            "code_128",
-            "ean_8",
-            "ean_13",
-            "itf",
-            "linear_codes",
-            "upc_a",
-            "upc_e",
-          ]}
-          onScan={(detectedCodes) => {
-            console.log(detectedCodes);
-            console.log(detectedCodes?.boundingBox);
-            console.log(detectedCodes?.cornerPoints);
-            console.log(detectedCodes?.format);
-            console.log(detectedCodes?.rawValue);
+      <Box
+        sx={{
+          position: "relative",
+          height: { md: 350, xs: 290 },
+          width: { md: 350, xs: 290 },
+
+          mx: "auto",
+        }}
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: 0,
+            width: "100%",
+            height: "100%",
           }}
-          components={{
-            audio: true,
-            onOff: true,
-            torch: true,
-            zoom: true,
-            finder: true,
-          }}
-          onError={(error) => {
-            console.log(`onError: ${error}'`);
-          }}
-        />
-        {/* <p>{data}</p> */}
+        >
+          <Scanner
+            formats={[
+              "qr_code",
+              "micro_qr_code",
+              "rm_qr_code",
+              "maxi_code",
+              "pdf417",
+              "aztec",
+              "data_matrix",
+              "matrix_codes",
+              "dx_film_edge",
+              "databar",
+              "databar_expanded",
+              "codabar",
+              "code_39",
+              "code_93",
+              "code_128",
+              "ean_8",
+              "ean_13",
+              "itf",
+              "linear_codes",
+              "upc_a",
+              "upc_e",
+            ]}
+            onScan={(detectedCodes) => {
+              handleBarcodeDetect(detectedCodes?.rawValue);
+            }}
+            components={{
+              audio: true,
+              onOff: true,
+              torch: true,
+              zoom: true,
+              finder: true,
+            }}
+            onError={(error) => {
+              console.log(`onError: ${error}'`);
+            }}
+            allowMultiple={true}
+          />
+        </Box>
       </Box>
 
       <Box component="form" mt={5} onSubmit={handleSubmit(onSubmit)}>
