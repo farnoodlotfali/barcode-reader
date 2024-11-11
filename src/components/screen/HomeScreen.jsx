@@ -105,7 +105,11 @@ const HomeScreen = () => {
             "upc_e",
           ]}
           onScan={(detectedCodes) => {
-            console.log(`${detectedCodes}'`);
+            console.log(detectedCodes);
+            console.log(detectedCodes?.boundingBox);
+            console.log(detectedCodes?.cornerPoints);
+            console.log(detectedCodes?.format);
+            console.log(detectedCodes?.rawValue);
           }}
           components={{
             audio: true,
