@@ -8,7 +8,6 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { Scanner } from "@yudiel/react-qr-scanner";
 import { FormContainer, FormInputs } from "../form";
 import { LoadingButton } from "@mui/lab";
 import { INPUT_TYPES } from "@/constants/InputType";
@@ -18,7 +17,7 @@ import { EndPoints } from "@/constants/EndPoints";
 import { axiosApi } from "@/api/axiosApi";
 import { useState } from "react";
 import { enToFaNumber } from "@/utility/utils";
-import {BarcodeScanner} from '@thewirv/react-barcode-scanner';
+import { Scanner } from "@yudiel/react-qr-scanner";
 
 const InfoItem = ({ title, info }) => {
   return (
@@ -80,16 +79,7 @@ const HomeScreen = () => {
       }}
     >
       <Box>
-        <BarcodeScanner
-          onSuccess={(text) => setData(text)}
-          onError={(error) => {
-            if (error) {
-              console.error(error.message);
-            }
-          }}
-          onLoad={() => console.log("Video feed has loaded!")}
-          containerStyle={{ width: "100%" }}
-        />
+        <BarcodeScanner Scanner onScan={(result) => setData(result)} />
         <p>{data}</p>
       </Box>
 
