@@ -105,7 +105,7 @@ const HomeScreen = () => {
             "upc_e",
           ]}
           onScan={(detectedCodes) => {
-            setData(detectedCodes);
+            console.log(`${detectedCodes}'`);
           }}
           components={{
             audio: true,
@@ -118,7 +118,7 @@ const HomeScreen = () => {
             console.log(`onError: ${error}'`);
           }}
         />
-        <p>{data}</p>
+        {/* <p>{data}</p> */}
       </Box>
 
       <Box component="form" mt={5} onSubmit={handleSubmit(onSubmit)}>
