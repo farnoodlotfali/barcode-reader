@@ -15,9 +15,9 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { EndPoints } from "@/constants/EndPoints";
 import { axiosApi } from "@/api/axiosApi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { enToFaNumber } from "@/utility/utils";
-import { Scanner } from "@yudiel/react-qr-scanner";
+import { centerText, Scanner } from "@yudiel/react-qr-scanner";
 
 const InfoItem = ({ title, info }) => {
   return (
@@ -72,6 +72,8 @@ const HomeScreen = () => {
   };
 
   const handleBarcodeDetect = (code) => {
+    console.log(code);
+
     setValue("barcode", code);
   };
 
@@ -126,12 +128,14 @@ const HomeScreen = () => {
             onScan={(detectedCodes) => {
               handleBarcodeDetect(detectedCodes?.rawValue);
             }}
+            con
             components={{
               audio: true,
               onOff: true,
               torch: true,
               zoom: true,
               finder: true,
+              tracker: centerText,
             }}
             onError={(error) => {
               console.log(`onError: ${error}'`);
