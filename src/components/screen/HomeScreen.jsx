@@ -126,7 +126,7 @@ const HomeScreen = () => {
               "upc_e",
             ]}
             onScan={(detectedCodes) => {
-              handleBarcodeDetect(detectedCodes?.rawValue);
+              handleBarcodeDetect(detectedCodes?.[0]?.rawValue);
             }}
             con
             components={{
