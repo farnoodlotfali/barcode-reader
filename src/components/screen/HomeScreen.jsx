@@ -130,6 +130,9 @@ const HomeScreen = () => {
                 key={device.deviceId}
                 onClick={(e) => handleChangeCamera(device.deviceId)}
                 size="small"
+                sx={{
+                  bgcolor:'#ffffffaa'
+                }}
               >
                 <Typography
                   sx={{
