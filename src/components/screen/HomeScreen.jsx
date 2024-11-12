@@ -6,6 +6,7 @@ import {
   CircularProgress,
   Container,
   Divider,
+  IconButton,
   Stack,
   Typography,
 } from "@mui/material";
@@ -19,6 +20,7 @@ import { axiosApi } from "@/api/axiosApi";
 import { useState } from "react";
 import { enToFaNumber } from "@/utility/utils";
 import { centerText, Scanner, useDevices } from "@yudiel/react-qr-scanner";
+import MonochromePhotosTwoToneIcon from "@mui/icons-material/MonochromePhotosTwoTone";
 
 const InfoItem = ({ title, info }) => {
   return (
@@ -79,6 +81,10 @@ const HomeScreen = () => {
     handleSubmit(onSubmit)();
   };
 
+  const handleChangeCamera = (camera) => {
+    setDeviceId(camera);
+  };
+
   return (
     <Container maxWidth="xs">
       {isSubmitting && (
@@ -101,15 +107,6 @@ const HomeScreen = () => {
         </Box>
       )}
 
-      <select onChange={(e) => setDeviceId(e.target.value)}>
-        <option value={undefined}>Select a device</option>
-        {devices.map((device, index) => (
-          <option key={index} value={device.deviceId}>
-            {device.label}
-          </option>
-        ))}
-      </select>
-
       <Stack
         sx={{
           position: "relative",
@@ -119,6 +116,37 @@ const HomeScreen = () => {
           py: 5,
         }}
       >
+        <Box
+          sx={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            zIndex: 3,
+          }}
+        >
+          <Stack direction="row" spacing={2}>
+            {devices.map((device, i) => (
+              <IconButton
+                key={device.deviceId}
+                onClick={(e) => handleChangeCamera(device.deviceId)}
+                size="small"
+              >
+                <Typography
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    color:
+                      device.deviceId === deviceId
+                        ? "secondary.main"
+                        : "inherit",
+                  }}
+                >
+                  <MonochromePhotosTwoToneIcon fontSize="small" />
+                </Typography>
+              </IconButton>
+            ))}
+          </Stack>
+        </Box>
         <Box
           sx={{
             position: "absolute",
