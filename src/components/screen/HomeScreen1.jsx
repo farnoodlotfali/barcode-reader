@@ -18,7 +18,7 @@ import { EndPoints } from "@/constants/EndPoints";
 import { axiosApi } from "@/api/axiosApi";
 import { useState } from "react";
 import { enToFaNumber } from "@/utility/utils";
-import { centerText, Scanner, useDevices } from "@yudiel/react-qr-scanner";
+import { centerText, Scanner } from "@yudiel/react-qr-scanner";
 
 const InfoItem = ({ title, info }) => {
   return (
@@ -33,7 +33,7 @@ const InfoItem = ({ title, info }) => {
 
 const HomeScreen = () => {
   const [info, setInfo] = useState(null);
-  const [deviceId, setDeviceId] = useState(undefined);
+
   const {
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -41,8 +41,6 @@ const HomeScreen = () => {
     watch,
     control,
   } = useForm();
-
-  const devices = useDevices();
 
   const Inputs = [
     {
@@ -101,15 +99,6 @@ const HomeScreen = () => {
         </Box>
       )}
 
-      <select onChange={(e) => setDeviceId(e.target.value)}>
-        <option value={undefined}>Select a device</option>
-        {devices.map((device, index) => (
-          <option key={index} value={device.deviceId}>
-            {device.label}
-          </option>
-        ))}
-      </select>
-
       <Stack
         sx={{
           position: "relative",
@@ -127,9 +116,6 @@ const HomeScreen = () => {
           }}
         >
           <Scanner
-            constraints={{
-              deviceId: deviceId,
-            }}
             formats={[
               "qr_code",
               "micro_qr_code",
